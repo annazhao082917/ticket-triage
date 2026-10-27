@@ -1,0 +1,6 @@
+# Active only for tests (@ActiveProfiles("test")).
+# The value is fake on purpose. The context-load test never calls Anthropic.
+spring:
+  ai:
+    anthropic:
+      api-key: dummy-key-for-tests

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--
+		Spring Boot parent: dependency versions, Java 17 compiler settings, and the
+		test/plugin setup. We stay on Boot 3.5.x because that is the line Spring AI 1.1.x
+		supports. Spring AI 2.x needs Spring Boot 4, which is a later step, not this one.
+	-->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.16</version>
+		<relativePath/> <!-- look up the parent from Maven Central, not a relative path -->
+	</parent>
+
+	<groupId>com.annazhao</groupId>
+	<artifactId>ticket-triage</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>ticket-triage</name>
+	<description>Support Ticket Triage API</description>
+
+	<properties>
+		<java.version>17</java.version>
+		<!-- Latest stable Spring AI release that runs on Spring Boot 3. -->
+		<spring-ai.version>1.1.8</spring-ai.version>
+	</properties>
+
+	<!--
+		The BOM (bill of materials) picks one consistent version for every Spring AI
+		library. Dependencies below can omit <version>.
+	-->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.ai</groupId>
+				<artifactId>spring-ai-bom</artifactId>
+				<version>${spring-ai.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- HTTP API: embedded Tomcat, Spring MVC, and JSON. Controllers come later. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Bean Validation (the annotations we will put on request objects later). -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- Health and info endpoints under /actuator, for checking that the app is up. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!--
+			Spring AI client for Claude on the Anthropic API. The artifact name is
+			spring-ai-starter-model-anthropic; its version comes from the BOM above.
+		-->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-starter-model-anthropic</artifactId>
+		</dependency>
+
+		<!-- JUnit 5, Spring test support, and AssertJ. Not packaged into the running app. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Packages an executable jar and provides spring-boot:run. -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
