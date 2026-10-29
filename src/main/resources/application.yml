@@ -1,0 +1,38 @@
+# Settings for the ticket triage API. Change behavior here instead of in code.
+
+spring:
+  application:
+    # Name used in logs and on the Actuator info endpoint.
+    name: ticket-triage
+
+  ai:
+    anthropic:
+      # Read from the environment. Startup fails if ANTHROPIC_API_KEY is unset.
+      # Never put a real key in this file.
+      api-key: ${ANTHROPIC_API_KEY}
+      chat:
+        options:
+          # Current Claude Sonnet id, from Anthropic's model docs:
+          # https://platform.claude.com/docs/en/models/overview
+          # Spring AI forwards this string to the API. Swap the id here to try another model.
+          model: claude-sonnet-5-5
+          # Lower values stay closer to the most likely answer. Spring AI's default is 0.8.
+          # 0.2 keeps triage steady. Anthropic accepts 0.0 through 1.0.
+          temperature: 0.2
+
+# Actuator. On the web, Boot exposes only "health" unless we list more.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      # Publishes keys that start with "info." (the block below).
+      # It does not publish the rest of the environment, so the API key stays hidden.
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: Support Ticket Triage API
