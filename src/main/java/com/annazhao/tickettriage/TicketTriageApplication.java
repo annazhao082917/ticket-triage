@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * <p>{@code @SpringBootApplication} does three jobs: scan this package (and
  * packages under it) for Spring beans, turn on auto-configuration, and register
- * this class as a source of settings. There are no controllers yet. This step
- * only boots the framework so later steps have a place to live.
+ * this class as a source of settings. The triage endpoint lives under
+ * {@code com.annazhao.tickettriage.ticket}.
  */
 @SpringBootApplication
 public class TicketTriageApplication {
