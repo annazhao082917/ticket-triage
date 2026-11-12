@@ -1,6 +1,6 @@
 # Ticket Triage
 
-A small HTTP API that will sort incoming support tickets. This repository is the Day 1 skeleton: a Spring Boot app that can start, report its health, and is ready to call Claude. Endpoints, the triage logic, a database, and Docker come in later steps.
+A small HTTP API that will sort incoming support tickets. The app can start and report its health, and the request and response types for one ticket are in place. Endpoints, the triage logic, a database, and Docker come in later steps.
 
 ## Tech stack
 
@@ -34,3 +34,5 @@ Check the skeleton without a real key:
 - A triage service that asks Claude to classify a ticket
 - Persistence
 - Docker
+
+Done so far: Step 1 (project skeleton) and Step 2 (request and response types in `com.annazhao.tickettriage.ticket`).
